@@ -1244,7 +1244,7 @@ void MainWindow::uiInit()
     int configId = -1;
     settings->beginGroup("Client_Env");
     ui->Set_Client_envScriptEdit->setText(settings->value("scriptPath").toString());
-    ui->Set_Client_workingDirEdit->setText(settings->value("workingDir", "../data").toString());
+    ui->Set_Client_workingDirEdit->setText(settings->value("workingDir", "../client").toString());
     configId = ui->Set_Client_configFileBox->findData(settings->value("configFile"));
     ui->Set_Client_configPathEdit->setText(settings->value("extConfigFilePath", "config.json").toString());
     settings->endGroup();
