@@ -1,4 +1,4 @@
-QT       += core gui serialport
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,6 +28,7 @@ SOURCES += \
     ui/mf_uid_parameterdialog.cpp \
     ui/mainwindow.cpp \
     ui/mf_attack_hardnesteddialog.cpp \
+    ui/firmwareupdatedialog.cpp \
 
 HEADERS += \
     common/myeventfilter.h \
@@ -41,6 +42,7 @@ HEADERS += \
     ui/mf_uid_parameterdialog.h \
     ui/mainwindow.h \
     ui/mf_attack_hardnesteddialog.h \
+    ui/firmwareupdatedialog.h \
 
 FORMS += \
     ui/t55xxtab.ui \
@@ -48,7 +50,8 @@ FORMS += \
     ui/mf_sim_simdialog.ui \
     ui/mf_uid_parameterdialog.ui \
     ui/mainwindow.ui \
-    ui/mf_attack_hardnesteddialog.ui
+    ui/mf_attack_hardnesteddialog.ui \
+    ui/firmwareupdatedialog.ui
 
 TRANSLATIONS += \
     ../i18n/zh_CN.ts \

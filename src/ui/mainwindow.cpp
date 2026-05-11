@@ -3,6 +3,7 @@
 
 #include <QJsonDocument>
 #include <QDirIterator>
+#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent)
@@ -12,11 +13,16 @@ MainWindow::MainWindow(QWidget *parent):
     dockAllWindows = new QAction(tr("Dock all windows"), this);
     myInfo = new QAction("wh201906", this);
     currVersion = new QAction(tr("Ver: ") + QApplication::applicationVersion().section('.', 0, -2), this); // ignore the 4th version number
-    checkUpdate = new QAction(tr("Check Update"), this);
-    connect(dockAllWindows, &QAction::triggered, [ = ]()
+checkUpdate = new QAction(tr("Check Update"), this);
+    firmwareUpdate = new QAction(tr("Firmware Update"), this);
+    connect(checkUpdate, &QAction::triggered, [ = ]()
     {
-        for(int i = 0; i < dockList.size(); i++)
-            dockList[i]->setFloating(false);
+        QDesktopServices::openUrl(QUrl("https://github.com/wh201906/Proxmark3GUI/releases"));
+    });
+    connect(firmwareUpdate, &QAction::triggered, [ = ]()
+    {
+        fwUpdateDialog = new FirmwareUpdateDialog(this);
+        fwUpdateDialog->exec();
     });
     connect(myInfo, &QAction::triggered, [ = ]()
     {
@@ -65,7 +71,9 @@ MainWindow::MainWindow(QWidget *parent):
     contextMenu->addAction(myInfo);
     currVersion->setEnabled(false);
     contextMenu->addAction(currVersion);
+    contextMenu->addSeparator();
     contextMenu->addAction(checkUpdate);
+    contextMenu->addAction(firmwareUpdate);
 
 }
 
@@ -112,34 +120,67 @@ void MainWindow::initUI() // will be called by main.app
 
 void MainWindow::on_portSearchTimer_timeout()
 {
-    QStringList newPortList; // for actural port name
-    QStringList newPortNameList; // for display name
+    struct PortScore {
+        QString portName;
+        QString displayName;
+        int score;
+    };
+    QVector<PortScore> scoredPorts;
     const QString hint = " *";
 
     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
     {
-//        qDebug() << info.isNull() << info.portName() << info.description() << info.serialNumber() << info.manufacturer();
         if(!info.isNull())
         {
-            QString idString = (info.description() + info.serialNumber() + info.manufacturer()).toLower();
-            QString portName = info.portName();
+            PortScore ps;
+            ps.portName = info.portName();
+            ps.displayName = info.description();
+            ps.score = 0;
 
-            newPortList << portName;
             if(info.hasVendorIdentifier() && info.hasProductIdentifier())
             {
                 quint16 vid = info.vendorIdentifier();
                 quint16 pid = info.productIdentifier();
                 if(vid == 0x9AC4 && pid == 0x4B8F)
-                    portName += hint;
+                    ps.score += 100;
                 else if(vid == 0x2D2D && pid == 0x504D)
-                    portName += hint;
+                    ps.score += 90;
             }
-            else if(idString.contains("proxmark") || idString.contains("iceman"))
-                portName += hint;
-            newPortNameList << portName;
+
+            QString lowerDesc = info.description().toLower();
+            if(lowerDesc.contains("proxmark") || lowerDesc.contains("iceman"))
+                ps.score += 80;
+
+            QString lowerSerial = info.serialNumber().toLower();
+            QString lowerManuf = info.manufacturer().toLower();
+            if(lowerSerial.contains("proxmark") || lowerSerial.contains("iceman") ||
+               lowerManuf.contains("proxmark") || lowerManuf.contains("iceman"))
+                ps.score += 70;
+
+            if(lowerDesc.contains("usb serial") || lowerDesc.contains("usb-serial") ||
+               lowerDesc.contains("ftdi") || lowerDesc.contains("ch340") ||
+               lowerDesc.contains("cp210"))
+                ps.score += 10;
+
+            if(ps.score >= 80)
+                ps.displayName += hint;
+
+            scoredPorts.append(ps);
         }
     }
-    if(newPortList != portList) // update PM3_portBox when available ports changed
+
+    std::sort(scoredPorts.begin(), scoredPorts.end(),
+              [](const PortScore &a, const PortScore &b) { return a.score > b.score; });
+
+    QStringList newPortList;
+    QStringList newPortNameList;
+    for(const PortScore &ps : scoredPorts)
+    {
+        newPortList << ps.portName;
+        newPortNameList << ps.displayName;
+    }
+
+    if(newPortList != portList)
     {
         portList = newPortList;
         ui->PM3_portBox->clear();

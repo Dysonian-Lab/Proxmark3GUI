@@ -34,6 +34,7 @@
 #include "module/t55xxtab.h"
 #include "common/util.h"
 #include "ui/mf_trailerdecoderdialog.h"
+#include "ui/firmwareupdatedialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -233,6 +234,7 @@ private:
     QAction* myInfo;
     QAction* currVersion;
     QAction* checkUpdate;
+    QAction* firmwareUpdate;
     QSettings* settings;
     MyEventFilter* keyEventFilter;
     MyEventFilter* resizeEventFilter;
@@ -261,6 +263,7 @@ private:
     QMenu* contextMenu;
 
     MF_trailerDecoderDialog* decDialog;
+    FirmwareUpdateDialog* fwUpdateDialog;
 
     QStringList m_clientPathList;
 

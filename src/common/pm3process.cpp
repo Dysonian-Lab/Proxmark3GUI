@@ -22,7 +22,6 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
     QString result;
     Util::ClientType clientType;
     setRequiringOutput(true);
-	QRegularExpression osPattern("(os:\\s+|OS\\.+\\s+)");
 
     // stash for reconnect
     currPath = path;
@@ -45,8 +44,7 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
             {
                 waitForReadyRead(200);
                 result += *requiredOutput;
-                // if(result.contains("os: "))
-                if(osPattern.match(result).hasMatch())
+                if(result.contains("os: "))
                     break;
             }
             setRequiringOutput(false);
@@ -55,16 +53,12 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
         {
             clientType = Util::CLIENTTYPE_OFFICIAL;
         }
-        // if(result.contains("os: ")) // make sure the PM3 is connected
-		if(osPattern.match(result).hasMatch())
+        if(result.contains("os: ")) // make sure the PM3 is connected
         {
             emit changeClientType(clientType);
-            // result = result.mid(result.indexOf("os: "));
-			QRegularExpressionMatch osMatch = osPattern.match(result);
-			result = result.mid(osMatch.capturedStart());
+            result = result.mid(result.indexOf("os: "));
             result = result.left(result.indexOf("\n"));
-            // result = result.mid(4, result.indexOf(" ", 4) - 4);
-			result = result.mid(osMatch.capturedLength(), result.indexOf(" ", osMatch.capturedLength()) - osMatch.capturedLength());
+            result = result.mid(4, result.indexOf(" ", 4) - 4);
             emit PM3StatedChanged(true, result);
         }
         else
