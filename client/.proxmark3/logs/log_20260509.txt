@@ -1,0 +1,956 @@
+[+] About to use the following file:
+[+]    bootrom.elf
+[+] Loading ELF file bootrom.elf
+[+] ELF file version Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+
+[+] Waiting for Proxmark3 to appear on COM19
+ found
+[+] Entering bootloader...
+[+] (Press and release the button only to abort)
+[+] Waiting for Proxmark3 to appear on COM19
+ found
+[=] Available memory on this board: 512K bytes
+
+[=] Permitted flash range: 0x00100000-0x00180000
+[+] Loading usable ELF segments:
+[+]    0: V 0x00100000 P 0x00100000 (0x00000200->0x00000200) [R X] @0x94
+[+]    1: V 0x00200000 P 0x00100200 (0x00000d1c->0x00000d1c) [R X] @0x298
+
+[+] Flashing...
+[+] Writing segments for file: bootrom.elf
+[+]  0x00100000..0x001001ff [0x200 / 1 blocks]
+ ok
+[+]  0x00100200..0x00100f1b [0xd1c / 7 blocks]
+ ok
+
+[+] All done
+
+[=] Have a nice day!
+
+[+] About to use the following files:
+[+]    bootrom.elf
+[+]    fullimage.elf
+[+] Loading ELF file bootrom.elf
+[+] ELF file version Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+
+[+] Loading ELF file fullimage.elf
+[+] ELF file version Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+
+[+] Waiting for Proxmark3 to appear on COM19
+ found
+[+] Entering bootloader...
+[+] (Press and release the button only to abort)
+[+] Waiting for Proxmark3 to appear on COM19
+ found
+[=] Available memory on this board: 512K bytes
+
+[=] Permitted flash range: 0x00100000-0x00180000
+[+] Loading usable ELF segments:
+[+]    0: V 0x00100000 P 0x00100000 (0x00000200->0x00000200) [R X] @0x94
+[+]    1: V 0x00200000 P 0x00100200 (0x00000d1c->0x00000d1c) [R X] @0x298
+
+[+] Loading usable ELF segments:
+[+]    0: V 0x00102000 P 0x00102000 (0x0004992c->0x0004992c) [R X] @0x98
+[+]    1: V 0x00200000 P 0x0014b92c (0x00001b35->0x00001b35) [R X] @0x499c8
+[=] Note: Extending previous segment from 0x4992c to 0x4b461 bytes
+
+[+] Flashing...
+[+] Writing segments for file: bootrom.elf
+[+]  0x00100000..0x001001ff [0x200 / 1 blocks]
+ ok
+[+]  0x00100200..0x00100f1b [0xd1c / 7 blocks]
+ ok
+
+[+] Writing segments for file: fullimage.elf
+[+]  0x00102000..0x0014d460 [0x4b461 / 603 blocks]
+ ok
+
+[+] All done
+
+[=] Have a nice day!
+
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[=] Creating initial preferences file
+[=] Saving preferences...
+[+] saved to json file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+  [ Proxmark3 RFID instrument ]
+
+    MCU....... AT91SAM7S512 Rev A
+    Memory.... 512 KB ( 60% used )
+
+    Client.... Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22
+    Bootrom... Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 
+    OS........ Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 
+    Target.... PM3 GENERIC
+
+
+[=] No previous history could be loaded
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+
+[!] ERROR: invalid serial port COM19
+
+[?] Try the shell script `./pm3 --list` to get a list of possible serial ports
+[usb|script] pm3 --> lf read
+[usb|script] pm3 --> ?
+
+[usb|script] pm3 --> lf scan
+
+[usb|script] pm3 --> lf read
+[usb|script] pm3 --> lf read
+[usb|script] pm3 --> exit
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> lf em 410x reader
+[usb|script] pm3 --> lf em 410x reader
+[usb|script] pm3 --> lf search -u
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+[+] [H10301  ] HID H10301 26-bit                FC: 78  CN: 46574  parity ( ok )
+[+] [ind26   ] Indala 26-bit                    FC: 1259  CN: 1518  parity ( ok )
+[=] found 2 matching formats
+[+] DemodBuffer:
+[+] 1D555955556996A6699AA6A6
+
+[=] raw: 0000000000000020069d6bdd
+
+[+] Valid HID Prox ID found!
+
+[+] Chipset detection: EM4x05 / EM4x69
+[?] Hint: try `lf em 4x05` commands
+[usb|script] pm3 --> lf em 410x reader
+[usb|script] pm3 --> lf em 410x reader
+[usb|script] pm3 --> lf read -v
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[#] Done, saved 42712 out of 0 seen samples at 8 bits/sample
+[=] Reading 42711 bytes from device memory
+[+] Data fetched
+[=] Samples @ 8 bits/smpl, decimation 1:1 
+[usb|script] pm3 --> data plot
+[usb|script] pm3 --> hf sniff
+[#] Skipping first 0 sample pairs, Skipping 0 triggers
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> hf sniff
+[#] Skipping first 0 sample pairs, Skipping 0 triggers
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> hf 14a sniff
+[#] Starting to sniff. Press PM3 Button to stop.
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+
+[!] ERROR: invalid serial port COM19
+
+[?] Try the shell script `./pm3 --list` to get a list of possible serial ports
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> lf read -v
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... yes
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[#] Done, saved 42712 out of 0 seen samples at 8 bits/sample
+[=] Reading 42711 bytes from device memory
+[+] Data fetched
+[=] Samples @ 8 bits/smpl, decimation 1:1 
+[usb|script] pm3 --> data plot
+[usb|script] pm3 --> scan
+
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] hf search
+
+[+]  UID: 04 12 19 C3 CC 98 02 
+[+] ATQA: 00 44
+[+]  SAK: 08 [2]
+[+] MANUFACTURER: NXP Semiconductors Germany
+[+] Possible types:
+[+]    MIFARE Classic 1K CL2
+[=] proprietary non iso14443-4 card found, RATS not supported
+[+] Magic capabilities : possibly Gen 3 / APDU
+[+] Prng detection: weak
+[#] Auth error
+[?] Hint: try `hf mf` commands
+
+
+[+] Valid ISO 14443-A tag found
+
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] hf search
+[!] No known/supported 13.56 MHz tags found
+[=] lf search - unknown
+[=] -->  trying  ( 125.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 134.83 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 250.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 375.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 500.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] Failed both LF / HF SEARCH,
+[=] Trying `lf read` and save a trace for you
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[+] saved 40000 bytes to PM3 file 'D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/lf_unknown_2026-05-09_23:28.pm3'
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] hf search
+[!] No known/supported 13.56 MHz tags found
+[=] lf search - unknown
+[=] -->  trying  ( 125.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 134.83 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 250.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 375.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 500.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] Failed both LF / HF SEARCH,
+[=] Trying `lf read` and save a trace for you
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[+] saved 40000 bytes to PM3 file 'D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/lf_unknown_2026-05-09_23:29.pm3'
+[usb|script] pm3 --> hf auto
+
+[usb|script] pm3 --> hf search
+[!] No known/supported 13.56 MHz tags found
+[usb|script] pm3 --> hf search
+[!] No known/supported 13.56 MHz tags found
+[usb|script] pm3 --> hf sniff
+[#] Skipping first 0 sample pairs, Skipping 0 triggers
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> lf tune --divisor 95
+[=] Measuring LF antenna at 125.00 kHz, click pm3 button or press Enter to exit
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+[usb|script] pm3 --> lf em 410x reader
+[+] EM 410x ID 1111111111
+[usb|script] pm3 --> lf em 410x reader
+[+] EM 410x ID 1111111111
+[usb|script] pm3 --> lf search -u
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+[+] EM 410x ID 1111111111
+[+] EM410x ( RF/64 )
+[=] -------- Possible de-scramble patterns ---------
+[+] Unique TAG ID      : 8888888888
+[=] HoneyWell IdentKey
+[+]     DEZ 8          : 01118481
+[+]     DEZ 10         : 0286331153
+[+]     DEZ 5.5        : 04369.04369
+[+]     DEZ 3.5A       : 017.04369
+[+]     DEZ 3.5B       : 017.04369
+[+]     DEZ 3.5C       : 017.04369
+[+]     DEZ 14/IK2     : 00073300775185
+[+]     DEZ 15/IK3     : 000586406201480
+[+]     DEZ 20/ZK      : 08080808080808080808
+[=] 
+[+] Other              : 04369_017_01118481
+[+] Pattern Paxton     : 287657745 [0x11254F11]
+[+] Pattern 1          : 4342282 [0x42420A]
+[+] Pattern Sebury     : 4369 17 1118481  [0x1111 0x11 0x111111]
+[+] VD / ID            : 017 / 0286331153
+[=] ------------------------------------------------
+
+[+] Valid EM410x ID found!
+
+[=] Couldn't identify a chipset
+[usb|script] pm3 --> search
+
+[usb|script] pm3 --> search auto
+
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+[-] No known 125/134 kHz tags found!
+[=] Couldn't identify a chipset
+[=] hf search
+[!] No known/supported 13.56 MHz tags found
+[=] lf search - unknown
+[=] -->  trying  ( 125.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+[-] No known 125/134 kHz tags found!
+[=] Couldn't identify a chipset
+[=] -->  trying  ( 134.83 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+[-] No known 125/134 kHz tags found!
+[=] Couldn't identify a chipset
+[=] -->  trying  ( 250.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 375.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 500.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] Failed both LF / HF SEARCH,
+[=] Trying `lf read` and save a trace for you
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[+] saved 40000 bytes to PM3 file 'D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/lf_unknown_2026-05-09_23:37.pm3'
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] hf search
+[!] No known/supported 13.56 MHz tags found
+[=] lf search - unknown
+[=] -->  trying  ( 125.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 134.83 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 250.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 375.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 500.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] Failed both LF / HF SEARCH,
+[=] Trying `lf read` and save a trace for you
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[+] saved 40000 bytes to PM3 file 'D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/lf_unknown_2026-05-09_23:38.pm3'
+[usb|script] pm3 --> auto
+[=] lf search
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] hf search
+[!] No known/supported 13.56 MHz tags found
+[=] lf search - unknown
+[=] -->  trying  ( 125.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 134.83 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 250.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 375.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] -->  trying  ( 500.00 kHz )
+
+[=] NOTE: some demods output possible binary
+[=] if it finds something that looks like a tag
+[=] False Positives ARE possible
+[=] 
+[=] Checking for known tags...
+[=] 
+
+
+[-] No data found!
+[?] Maybe not an LF tag?
+
+[=] Failed both LF / HF SEARCH,
+[=] Trying `lf read` and save a trace for you
+[#] LF Sampling config
+[#]   [q] divisor............. 95 ( 125.00 kHz )
+[#]   [b] bits per sample..... 8
+[#]   [d] decimation.......... 1
+[#]   [a] averaging........... no
+[#]   [t] trigger threshold... 0
+[#]   [s] samples to skip..... 0 
+[#] 
+[+] saved 40000 bytes to PM3 file 'D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/lf_unknown_2026-05-09_23:39.pm3'

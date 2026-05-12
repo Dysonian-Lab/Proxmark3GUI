@@ -1,0 +1,44 @@
+[=] Output will be flushed after every print.
+
+[+] loaded from JSON file D:\PM3\Proxmark3GUI-master\V0.2.8-win64-rrg_other-v4.16717\client\/.proxmark3/preferences.json
+[=] Using UART port COM19
+[=] Communicating with PM3 over USB-CDC
+[usb|script] pm3 --> hw version
+
+ [ Proxmark3 RFID instrument ]
+
+ [ CLIENT ]
+  Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:22 c446c2de4
+  compiled with............. MinGW-w64 10.3.0
+  platform.................. Windows (64b) / x86_64
+  Readline support.......... present
+  QT GUI support............ present
+  native BT support......... absent
+  Python script support..... absent
+  Lua SWIG support.......... present
+  Python SWIG support....... absent
+
+ [ PROXMARK3 ]
+  firmware.................. PM3 GENERIC
+
+ [ ARM ]
+  bootrom: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:08 c446c2de4
+       os: Iceman/master/v4.16717-9-gadfebd651 2023-06-26 21:52:14 c446c2de4
+  compiled with GCC 10.1.0
+
+ [ FPGA ] 
+  LF image 2s30vq100 2023-05-24 14:12:56
+  HF image 2s30vq100 2023-05-26 19:50:53
+  HF FeliCa image 2s30vq100 2023-05-24 14:12:58
+  HF 15 image 2s30vq100 2023-05-24 14:12:57
+
+ [ Hardware ]
+  --= uC: AT91SAM7S512 Rev A
+  --= Embedded Processor: ARM7TDMI
+  --= Internal SRAM size: 64K bytes
+  --= Architecture identifier: AT91SAM7Sxx Series
+  --= Embedded flash memory 512K bytes ( 60% used )
+
+
+[!] Communicating with Proxmark3 device failed
+

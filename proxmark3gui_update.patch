@@ -1,0 +1,304 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 4c58802..d3e2621 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -7,6 +7,8 @@
+ + Fix some bugs  
+ + Make it easier for testing this GUI across multiple clients  
+ + Add support for Bluetooth and TCP connection  
+++ Enhanced COM port auto-detection with intelligent scoring algorithm (supports VID/PID 0x9AC4:0x4B8F, 0x2D2D:0x504D)  
+++ Add firmware update functionality with GitHub releases integration  
+ 
+ ### V0.2.7
+ + Fix writing to Block 0 failure when using with RRG repo v4.15864  
+diff --git a/README.md b/README.md
+index 151f6f6..0fd8985 100644
+--- a/README.md
++++ b/README.md
+@@ -12,6 +12,15 @@ A cross-platform GUI for [Proxmark3](https://github.com/Proxmark/proxmark3)/[Pro
+ 
+ ## Features
+ 
+++ Enhanced COM port auto-detection with intelligent scoring algorithm
++    + Automatically detects Proxmark3 devices by VID/PID (0x9AC4:0x4B8F, 0x2D2D:0x504D)
++    + Identifies devices by description, serial number, and manufacturer name
++    + Automatically selects the most likely Proxmark3 port
+++ Firmware update functionality
++    + Check for the latest firmware version from GitHub releases
++    + Download firmware directly within the GUI
++    + Flash firmware to connected Proxmark3 devices
++    + Detect current firmware version via `hw ver` command
+ + Easy to find available Serial Port
+ + Support raw commands of Proxmark3 client(Official/Iceman)
+ + Have a friendly UI to test Mifare cards
+@@ -82,8 +91,6 @@ open Proxmark3GUI.app
+ 
+ > In order for the GUI to connect to the device in macOS, you'd need to tweak the settings a little bit
+ 
+-Client Path must be path to pm3 console client like "/usr/local/bin/pm3/"
+-
+ ![macOS_settings](doc/README/macOS_settings.png)
+ 
+ ***
+diff --git a/doc/CHANGELOG/CHANGELOG_zh_CN.md b/doc/CHANGELOG/CHANGELOG_zh_CN.md
+index 0aea05f..6a67af0 100644
+--- a/doc/CHANGELOG/CHANGELOG_zh_CN.md
++++ b/doc/CHANGELOG/CHANGELOG_zh_CN.md
+@@ -7,6 +7,8 @@
+ + 修复若干Bug  
+ + 便于在不同版本客户端之间切换  
+ + 支持蓝牙及TCP连接  
+++ 增强的串口自动检测，支持通过VID/PID识别Proxmark3设备（0x9AC4:0x4B8F, 0x2D2D:0x504D）  
+++ 新增固件更新功能，可从GitHub Releases获取最新固件并一键刷入  
+ 
+ ### V0.2.7
+ + 修复使用冰人版v4.15864时无法写入块0的问题  
+diff --git a/doc/README/README_zh_CN.md b/doc/README/README_zh_CN.md
+index b7dd03d..254be80 100644
+--- a/doc/README/README_zh_CN.md
++++ b/doc/README/README_zh_CN.md
+@@ -12,6 +12,15 @@
+ 
+ ## 功能
+ 
+++ 增强的串口自动检测，采用智能评分算法
++    + 通过VID/PID自动识别Proxmark3设备（0x9AC4:0x4B8F, 0x2D2D:0x504D）
++    + 通过描述、序列号和制造商名称识别设备
++    + 自动选中最可能的Proxmark3端口
+++ 固件更新功能
++    + 从GitHub Releases检查最新固件版本
++    + 在GUI内直接下载固件
++    + 刷写固件到已连接的Proxmark3设备
++    + 通过`hw ver`命令检测当前固件版本
+ + 快速查找可用端口并连接
+ + 支持直接输入PM3命令(官方版/冰人版)
+ + 有针对于Mifare卡（IC卡）的图形界面
+diff --git a/src/Proxmark3GUI.pro b/src/Proxmark3GUI.pro
+index 433c921..9f7b699 100644
+--- a/src/Proxmark3GUI.pro
++++ b/src/Proxmark3GUI.pro
+@@ -1,4 +1,4 @@
+-QT       += core gui serialport
++QT       += core gui serialport network
+ 
+ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+ 
+@@ -28,6 +28,7 @@ SOURCES += \
+     ui/mf_uid_parameterdialog.cpp \
+     ui/mainwindow.cpp \
+     ui/mf_attack_hardnesteddialog.cpp \
++    ui/firmwareupdatedialog.cpp \
+ 
+ HEADERS += \
+     common/myeventfilter.h \
+@@ -41,6 +42,7 @@ HEADERS += \
+     ui/mf_uid_parameterdialog.h \
+     ui/mainwindow.h \
+     ui/mf_attack_hardnesteddialog.h \
++    ui/firmwareupdatedialog.h \
+ 
+ FORMS += \
+     ui/t55xxtab.ui \
+@@ -48,7 +50,8 @@ FORMS += \
+     ui/mf_sim_simdialog.ui \
+     ui/mf_uid_parameterdialog.ui \
+     ui/mainwindow.ui \
+-    ui/mf_attack_hardnesteddialog.ui
++    ui/mf_attack_hardnesteddialog.ui \
++    ui/firmwareupdatedialog.ui
+ 
+ TRANSLATIONS += \
+     ../i18n/zh_CN.ts \
+diff --git a/src/common/pm3process.cpp b/src/common/pm3process.cpp
+index bb102e4..76c13b8 100644
+--- a/src/common/pm3process.cpp
++++ b/src/common/pm3process.cpp
+@@ -22,7 +22,6 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
+     QString result;
+     Util::ClientType clientType;
+     setRequiringOutput(true);
+-	QRegularExpression osPattern("(os:\\s+|OS\\.+\\s+)");
+ 
+     // stash for reconnect
+     currPath = path;
+@@ -45,8 +44,7 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
+             {
+                 waitForReadyRead(200);
+                 result += *requiredOutput;
+-                // if(result.contains("os: "))
+-                if(osPattern.match(result).hasMatch())
++                if(result.contains("os: "))
+                     break;
+             }
+             setRequiringOutput(false);
+@@ -55,16 +53,12 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
+         {
+             clientType = Util::CLIENTTYPE_OFFICIAL;
+         }
+-        // if(result.contains("os: ")) // make sure the PM3 is connected
+-		if(osPattern.match(result).hasMatch())
++        if(result.contains("os: ")) // make sure the PM3 is connected
+         {
+             emit changeClientType(clientType);
+-            // result = result.mid(result.indexOf("os: "));
+-			QRegularExpressionMatch osMatch = osPattern.match(result);
+-			result = result.mid(osMatch.capturedStart());
++            result = result.mid(result.indexOf("os: "));
+             result = result.left(result.indexOf("\n"));
+-            // result = result.mid(4, result.indexOf(" ", 4) - 4);
+-			result = result.mid(osMatch.capturedLength(), result.indexOf(" ", osMatch.capturedLength()) - osMatch.capturedLength());
++            result = result.mid(4, result.indexOf(" ", 4) - 4);
+             emit PM3StatedChanged(true, result);
+         }
+         else
+diff --git a/src/ui/mainwindow.cpp b/src/ui/mainwindow.cpp
+index 3dd3e57..38a8fd4 100644
+--- a/src/ui/mainwindow.cpp
++++ b/src/ui/mainwindow.cpp
+@@ -3,6 +3,7 @@
+ 
+ #include <QJsonDocument>
+ #include <QDirIterator>
++#include <algorithm>
+ 
+ MainWindow::MainWindow(QWidget *parent):
+     QMainWindow(parent)
+@@ -12,11 +13,16 @@ MainWindow::MainWindow(QWidget *parent):
+     dockAllWindows = new QAction(tr("Dock all windows"), this);
+     myInfo = new QAction("wh201906", this);
+     currVersion = new QAction(tr("Ver: ") + QApplication::applicationVersion().section('.', 0, -2), this); // ignore the 4th version number
+-    checkUpdate = new QAction(tr("Check Update"), this);
+-    connect(dockAllWindows, &QAction::triggered, [ = ]()
++checkUpdate = new QAction(tr("Check Update"), this);
++    firmwareUpdate = new QAction(tr("Firmware Update"), this);
++    connect(checkUpdate, &QAction::triggered, [ = ]()
++    {
++        QDesktopServices::openUrl(QUrl("https://github.com/wh201906/Proxmark3GUI/releases"));
++    });
++    connect(firmwareUpdate, &QAction::triggered, [ = ]()
+     {
+-        for(int i = 0; i < dockList.size(); i++)
+-            dockList[i]->setFloating(false);
++        fwUpdateDialog = new FirmwareUpdateDialog(this);
++        fwUpdateDialog->exec();
+     });
+     connect(myInfo, &QAction::triggered, [ = ]()
+     {
+@@ -65,7 +71,9 @@ MainWindow::MainWindow(QWidget *parent):
+     contextMenu->addAction(myInfo);
+     currVersion->setEnabled(false);
+     contextMenu->addAction(currVersion);
++    contextMenu->addSeparator();
+     contextMenu->addAction(checkUpdate);
++    contextMenu->addAction(firmwareUpdate);
+ 
+ }
+ 
+@@ -112,34 +120,67 @@ void MainWindow::initUI() // will be called by main.app
+ 
+ void MainWindow::on_portSearchTimer_timeout()
+ {
+-    QStringList newPortList; // for actural port name
+-    QStringList newPortNameList; // for display name
++    struct PortScore {
++        QString portName;
++        QString displayName;
++        int score;
++    };
++    QVector<PortScore> scoredPorts;
+     const QString hint = " *";
+ 
+     foreach(const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
+     {
+-//        qDebug() << info.isNull() << info.portName() << info.description() << info.serialNumber() << info.manufacturer();
+         if(!info.isNull())
+         {
+-            QString idString = (info.description() + info.serialNumber() + info.manufacturer()).toLower();
+-            QString portName = info.portName();
++            PortScore ps;
++            ps.portName = info.portName();
++            ps.displayName = info.description();
++            ps.score = 0;
+ 
+-            newPortList << portName;
+             if(info.hasVendorIdentifier() && info.hasProductIdentifier())
+             {
+                 quint16 vid = info.vendorIdentifier();
+                 quint16 pid = info.productIdentifier();
+                 if(vid == 0x9AC4 && pid == 0x4B8F)
+-                    portName += hint;
++                    ps.score += 100;
+                 else if(vid == 0x2D2D && pid == 0x504D)
+-                    portName += hint;
++                    ps.score += 90;
+             }
+-            else if(idString.contains("proxmark") || idString.contains("iceman"))
+-                portName += hint;
+-            newPortNameList << portName;
++
++            QString lowerDesc = info.description().toLower();
++            if(lowerDesc.contains("proxmark") || lowerDesc.contains("iceman"))
++                ps.score += 80;
++
++            QString lowerSerial = info.serialNumber().toLower();
++            QString lowerManuf = info.manufacturer().toLower();
++            if(lowerSerial.contains("proxmark") || lowerSerial.contains("iceman") ||
++               lowerManuf.contains("proxmark") || lowerManuf.contains("iceman"))
++                ps.score += 70;
++
++            if(lowerDesc.contains("usb serial") || lowerDesc.contains("usb-serial") ||
++               lowerDesc.contains("ftdi") || lowerDesc.contains("ch340") ||
++               lowerDesc.contains("cp210"))
++                ps.score += 10;
++
++            if(ps.score >= 80)
++                ps.displayName += hint;
++
++            scoredPorts.append(ps);
+         }
+     }
+-    if(newPortList != portList) // update PM3_portBox when available ports changed
++
++    std::sort(scoredPorts.begin(), scoredPorts.end(),
++              [](const PortScore &a, const PortScore &b) { return a.score > b.score; });
++
++    QStringList newPortList;
++    QStringList newPortNameList;
++    for(const PortScore &ps : scoredPorts)
++    {
++        newPortList << ps.portName;
++        newPortNameList << ps.displayName;
++    }
++
++    if(newPortList != portList)
+     {
+         portList = newPortList;
+         ui->PM3_portBox->clear();
+diff --git a/src/ui/mainwindow.h b/src/ui/mainwindow.h
+index b28a70b..382bfca 100644
+--- a/src/ui/mainwindow.h
++++ b/src/ui/mainwindow.h
+@@ -34,6 +34,7 @@
+ #include "module/t55xxtab.h"
+ #include "common/util.h"
+ #include "ui/mf_trailerdecoderdialog.h"
++#include "ui/firmwareupdatedialog.h"
+ 
+ QT_BEGIN_NAMESPACE
+ namespace Ui
+@@ -233,6 +234,7 @@ private:
+     QAction* myInfo;
+     QAction* currVersion;
+     QAction* checkUpdate;
++    QAction* firmwareUpdate;
+     QSettings* settings;
+     MyEventFilter* keyEventFilter;
+     MyEventFilter* resizeEventFilter;
+@@ -261,6 +263,7 @@ private:
+     QMenu* contextMenu;
+ 
+     MF_trailerDecoderDialog* decDialog;
++    FirmwareUpdateDialog* fwUpdateDialog;
+ 
+     QStringList m_clientPathList;
+ 
