@@ -3,6 +3,7 @@
 
 #include <QJsonDocument>
 #include <QDirIterator>
+#include <QStyle>
 #include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent):
@@ -21,7 +22,7 @@ checkUpdate = new QAction(tr("Check Update"), this);
     });
     connect(firmwareUpdate, &QAction::triggered, [ = ]()
     {
-        fwUpdateDialog = new FirmwareUpdateDialog(this);
+        fwUpdateDialog = new FirmwareUpdateDialog(util, this);
         fwUpdateDialog->exec();
     });
     connect(myInfo, &QAction::triggered, [ = ]()
@@ -46,19 +47,25 @@ checkUpdate = new QAction(tr("Check Update"), this);
 
     util = new Util(this);
     Util::setUI(ui);
-    mifare = new Mifare(ui, util, this);
-    lf = new LF(ui, util, this);
-    t55xxTab = new T55xxTab(util);
-    connect(lf, &LF::LFfreqConfChanged, this, &MainWindow::onLFfreqConfChanged);
-    connect(t55xxTab, &T55xxTab::setParentGUIState, this, &MainWindow::setState);
-    ui->funcTab->insertTab(2, t55xxTab, tr("T55xx"));
+mifare = new Mifare(ui, util, this);
+     lf = new LF(ui, util, this);
+     t55xxTab = new T55xxTab(util);
+     connect(lf, &LF::LFfreqConfChanged, this, &MainWindow::onLFfreqConfChanged);
+     connect(t55xxTab, &T55xxTab::setParentGUIState, this, &MainWindow::setState);
+     ui->funcTab->insertTab(2, t55xxTab, tr("T55xx"));
 
-    keyEventFilter = new MyEventFilter(QEvent::KeyPress);
-    resizeEventFilter = new MyEventFilter(QEvent::Resize);
+     keyEventFilter = new MyEventFilter(QEvent::KeyPress);
+     resizeEventFilter = new MyEventFilter(QEvent::Resize);
 
-    // hide unused tabs
+     // hide unused tabs
 //    ui->funcTab->removeTab(1);
-    ui->funcTab->removeTab(3);
+     ui->funcTab->removeTab(3);
+
+     // Set tab icons after tab removal
+     QStyle* style = ui->funcTab->style();
+     ui->funcTab->setTabIcon(0, style->standardIcon(QStyle::SP_DriveFDIcon));
+     ui->funcTab->setTabIcon(1, style->standardIcon(QStyle::SP_DriveHDIcon));
+     ui->funcTab->setTabIcon(2, style->standardIcon(QStyle::SP_FileIcon));
 
     portSearchTimer = new QTimer(this);
     portSearchTimer->setInterval(2000);
@@ -134,7 +141,43 @@ void MainWindow::on_portSearchTimer_timeout()
         {
             PortScore ps;
             ps.portName = info.portName();
-            ps.displayName = info.description();
+            // Build clean display name: portName + short descriptor
+            QString cleanName = info.portName();
+            QString lowerDesc = info.description().toLower();
+            QString lowerSerial = info.serialNumber().toLower();
+            QString lowerManuf = info.manufacturer().toLower();
+            if(lowerDesc.contains("proxmark") || lowerDesc.contains("iceman") ||
+               lowerSerial.contains("proxmark") || lowerSerial.contains("iceman") ||
+               lowerManuf.contains("proxmark") || lowerManuf.contains("iceman"))
+            {
+                cleanName += " (Proxmark3)";
+            }
+            else if(lowerDesc.contains("usb serial") || lowerDesc.contains("usb-serial"))
+            {
+                cleanName += " (USB Serial)";
+            }
+            else if(lowerDesc.contains("ftdi"))
+            {
+                cleanName += " (FTDI)";
+            }
+            else if(lowerDesc.contains("ch340"))
+            {
+                cleanName += " (CH340)";
+            }
+            else if(lowerDesc.contains("cp210"))
+            {
+                cleanName += " (CP210)";
+            }
+            else if(!info.description().isEmpty())
+            {
+                // Use shortened description if none of the known types
+                QString shortDesc = info.description();
+                // Truncate long descriptions
+                if(shortDesc.length() > 30)
+                    shortDesc = shortDesc.left(27) + "...";
+                cleanName += " (" + shortDesc + ")";
+            }
+            ps.displayName = cleanName;
             ps.score = 0;
 
             if(info.hasVendorIdentifier() && info.hasProductIdentifier())
@@ -147,12 +190,9 @@ void MainWindow::on_portSearchTimer_timeout()
                     ps.score += 90;
             }
 
-            QString lowerDesc = info.description().toLower();
             if(lowerDesc.contains("proxmark") || lowerDesc.contains("iceman"))
                 ps.score += 80;
 
-            QString lowerSerial = info.serialNumber().toLower();
-            QString lowerManuf = info.manufacturer().toLower();
             if(lowerSerial.contains("proxmark") || lowerSerial.contains("iceman") ||
                lowerManuf.contains("proxmark") || lowerManuf.contains("iceman"))
                 ps.score += 70;
@@ -1651,15 +1691,24 @@ void MainWindow::dockInit()
     QWidget* widget;
     int count = ui->funcTab->count();
     qDebug() << "dock count" << count;
+    QStyle* style = ui->funcTab->style();
     for(int i = 0; i < count; i++)
     {
-        dock = new QDockWidget(ui->funcTab->tabText(0), this);
-        qDebug() << "dock name" << ui->funcTab->tabText(0);
+        dock = new QDockWidget(ui->funcTab->tabText(i), this);
+        qDebug() << "dock name" << ui->funcTab->tabText(i);
         dock->setFeatures(QDockWidget::DockWidgetFloatable | QDockWidget::DockWidgetMovable);// movable is necessary, otherwise the dock cannot be dragged
         dock->setAllowedAreas(Qt::BottomDockWidgetArea);
         dock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        widget = ui->funcTab->widget(0);
+        widget = ui->funcTab->widget(i);
         dock->setWidget(widget);
+        switch(i) {
+            case 0: dock->setWindowIcon(style->standardIcon(QStyle::SP_DriveFDIcon)); break;
+            case 1: dock->setWindowIcon(style->standardIcon(QStyle::SP_DriveHDIcon)); break;
+            case 2: dock->setWindowIcon(style->standardIcon(QStyle::SP_FileIcon)); break;
+            case 3: dock->setWindowIcon(style->standardIcon(QStyle::SP_ConsoleIcon)); break;
+            case 4: dock->setWindowIcon(style->standardIcon(QStyle::SP_FileDialogDetailedView)); break;
+            default: break;
+        }
         if(widget->objectName() == "rawTab")
             Util::setRawTab(dock, i);
         addDockWidget(Qt::BottomDockWidgetArea, dock);

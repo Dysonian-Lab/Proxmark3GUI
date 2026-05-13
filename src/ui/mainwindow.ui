@@ -522,9 +522,25 @@
                 <string>Clear</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="MF_File_dataButton">
+              </item>
+              <item>
+               <widget class="QComboBox" name="MF_dictComboBox"/>
+              </item>
+              <item>
+               <widget class="QPushButton" name="MF_dictLoadButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>40</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Load Dictionary</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="MF_File_dataButton">
                <property name="text">
                 <string>Data</string>
                </property>
@@ -2752,7 +2768,7 @@ The &quot;&lt;client dir&gt;&quot; will be replaced by the directory of the &quo
                  <item>
                   <widget class="QLineEdit" name="Set_Client_workingDirEdit">
                    <property name="text">
-                    <string>../data</string>
+                     <string>../client</string>
                    </property>
                   </widget>
                  </item>
