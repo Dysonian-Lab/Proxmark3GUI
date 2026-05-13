@@ -965,7 +965,7 @@ or the communication between a tag and a reader.</source>
     </message>
     <message>
         <location filename="../src/ui/mainwindow.ui" line="2755"/>
-        <source>../data</source>
+        <source>../client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

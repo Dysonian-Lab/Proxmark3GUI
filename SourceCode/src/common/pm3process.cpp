@@ -44,7 +44,8 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
             {
                 waitForReadyRead(200);
                 result += *requiredOutput;
-                if(result.contains("os: "))
+                QString upperResult = result.toUpper();
+                if(upperResult.contains("OS"))
                     break;
             }
             setRequiringOutput(false);
@@ -53,12 +54,26 @@ void PM3Process::connectPM3(const QString& path, const QStringList args)
         {
             clientType = Util::CLIENTTYPE_OFFICIAL;
         }
-        if(result.contains("os: ")) // make sure the PM3 is connected
+        QString upperResult = result.toUpper();
+        if(upperResult.contains("OS")) // make sure the PM3 is connected
         {
             emit changeClientType(clientType);
-            result = result.mid(result.indexOf("os: "));
-            result = result.left(result.indexOf("\n"));
-            result = result.mid(4, result.indexOf(" ", 4) - 4);
+            // Find the specific line containing version info
+            int osIdx = upperResult.indexOf("OS");
+            QString osLine = result.mid(osIdx);
+            osLine = osLine.left(osLine.indexOf("\n"));
+            if (osLine.startsWith("os: ")) {
+                // Old format: "os: Iceman/v4.21611 ..."
+                result = osLine.mid(4, osLine.indexOf(" ", 4) - 4);
+            } else {
+                // New v4.21611 format: "OS......... Iceman/master/v4.21611-suspect ..."
+                // Skip "OS" + dots + space, then take version until next space
+                int firstSpace = osLine.indexOf(' ');
+                if (firstSpace >= 0) {
+                    result = osLine.mid(firstSpace + 1);
+                    result = result.left(result.indexOf(' '));
+                }
+            }
             emit PM3StatedChanged(true, result);
         }
         else

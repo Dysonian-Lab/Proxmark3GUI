@@ -9,13 +9,14 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-FirmwareUpdateDialog::FirmwareUpdateDialog(QWidget *parent) :
+FirmwareUpdateDialog::FirmwareUpdateDialog(Util *util, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FirmwareUpdateDialog),
     networkManager(new QNetworkAccessManager(this)),
     currentReply(nullptr),
     firmwareFile(nullptr),
-    flashTimer(new QTimer(this))
+    flashTimer(new QTimer(this)),
+    util(util)
 {
     ui->setupUi(this);
 
@@ -38,7 +39,7 @@ FirmwareUpdateDialog::FirmwareUpdateDialog(QWidget *parent) :
             this, &FirmwareUpdateDialog::onNetworkReply);
 
     connect(ui->refreshCurrentButton, &QPushButton::clicked, [this]() {
-        QString output = Util::execCMDWithOutput("hw ver", Util::ReturnTrigger(10000));
+        QString output = this->util->execCMDWithOutput("hw ver", Util::ReturnTrigger(10000));
         QString version;
         if (extractVersionFromOutput(output, version)) {
             ui->currentVersionEdit->setText(version);
@@ -211,7 +212,7 @@ void FirmwareUpdateDialog::flashFirmware()
         if (!flashCmd.isEmpty()) flashCmd += " ";
         flashCmd += part;
     }
-    Util::execCMD(flashCmd);
+    util->execCMD(flashCmd);
 
     flashTimer->start(500);
 
@@ -236,7 +237,7 @@ void FirmwareUpdateDialog::setUIState(bool checking, bool downloading, bool read
 
 bool FirmwareUpdateDialog::extractVersionFromOutput(const QString& output, QString& version)
 {
-    QRegularExpression versionRegex("(\$?\\s*)?(v?\\d+\\.\\d+\\.\\d+[\\w\\-]*)",
+    QRegularExpression versionRegex("(\\$?\\s*)?(v?\\d+\\.\\d+\\.\\d+[\\w\\-]*)",
                                     QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatchIterator it = versionRegex.globalMatch(output);
 

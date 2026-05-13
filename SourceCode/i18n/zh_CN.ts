@@ -849,7 +849,7 @@ The &quot;&lt;client dir&gt;&quot; will be replaced by the directory of the &quo
     </message>
     <message>
         <location filename="../src/ui/mainwindow.ui" line="2755"/>
-        <source>../data</source>
+        <source>../client</source>
         <translation></translation>
     </message>
     <message>

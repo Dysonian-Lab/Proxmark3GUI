@@ -1,23 +1,25 @@
-#ifndef FIRMWAREUPDATEDIALOG_H
-#define FIRMWAREUPDATEDIALOG_H
+ #ifndef FIRMWAREUPDATEDIALOG_H
+ #define FIRMWAREUPDATEDIALOG_H
 
-#include <QDialog>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QFile>
-#include <QTimer>
+ #include <QDialog>
+ #include <QNetworkAccessManager>
+ #include <QNetworkReply>
+ #include <QFile>
+ #include <QTimer>
 
-namespace Ui
-{
-class FirmwareUpdateDialog;
-}
+ #include "common/util.h"
+
+ namespace Ui
+ {
+ class FirmwareUpdateDialog;
+ }
 
 class FirmwareUpdateDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FirmwareUpdateDialog(QWidget *parent = nullptr);
+    explicit FirmwareUpdateDialog(Util *util, QWidget *parent = nullptr);
     ~FirmwareUpdateDialog();
 
     struct FirmwareInfo
@@ -43,6 +45,7 @@ private:
     QNetworkReply *currentReply;
     QFile *firmwareFile;
     QTimer *flashTimer;
+    Util* util;
 
     FirmwareInfo latestFirmware;
     QString firmwareSavePath;
